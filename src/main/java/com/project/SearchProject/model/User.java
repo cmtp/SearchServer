@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * @author ctola
  */
-@Entity
+@Entity(name = "USER")
 public class User {
 
     @Id
