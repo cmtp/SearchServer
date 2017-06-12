@@ -1,6 +1,8 @@
 package com.project.SearchProject.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ctola
@@ -35,6 +37,13 @@ public class Address {
 
     @Column(name = "LONGITUDE")
     private int longitude;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SERVICEID")
+    private Service service;
+
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
+    private List<Phone> phones = new ArrayList<>();
 
     public Address() {
 
@@ -110,5 +119,21 @@ public class Address {
 
     public void setZone(String zone) {
         this.zone = zone;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
     }
 }

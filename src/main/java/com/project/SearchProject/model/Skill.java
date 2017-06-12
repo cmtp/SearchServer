@@ -24,6 +24,10 @@ public class Skill {
     @Column(name = "GOHOME")
     private Boolean goHome;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SERVICEID")
+    private Service service;
+
     public Skill() {
 
     }
@@ -66,5 +70,13 @@ public class Skill {
 
     public void setGoHome(Boolean goHome) {
         this.goHome = goHome;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 }

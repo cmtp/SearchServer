@@ -1,6 +1,8 @@
 package com.project.SearchProject.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ctola
@@ -24,6 +26,17 @@ public class Service {
 
     @Column(name = "EMAILSERVICE")
     private String emailService;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "USERID")
+    private User user;
+
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    private List<Skill> skills = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    private List<Address> addresses = new ArrayList<>();
 
     public Service() {
 
@@ -67,5 +80,29 @@ public class Service {
 
     public void setWeb(String web) {
         this.web = web;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }

@@ -18,6 +18,10 @@ public class Phone {
     @Column(name = "TYPEPHONE")
     private String typePhone;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ADDRESSID")
+    private Address address;
+
     public Phone() {
 
     }
@@ -44,5 +48,13 @@ public class Phone {
 
     public void setTypePhone(String typePhone) {
         this.typePhone = typePhone;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
