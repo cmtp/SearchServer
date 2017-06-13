@@ -60,4 +60,21 @@ public class UserImpl implements UserService {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @Override
+    public ResponseEntity setUser(Long userId, UserDTO userDTO) {
+        Map<String, Object> response = new HashMap<>();
+        User user = userRepository.findOne(userId);
+        if (null != user) {
+            user.setName(userDTO.getName());
+            user.setEmail(userDTO.getEmail());
+            user.setGender(userDTO.getGender());
+            response.put("status", "ok");
+            response.put("message", "User was modified");
+            response.put("data", user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("status", "error");
+        response.put("message", "User not found");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }

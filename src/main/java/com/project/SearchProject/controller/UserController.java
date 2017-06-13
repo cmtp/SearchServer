@@ -35,8 +35,13 @@ public class UserController {
         return userService.createUser(userDTO);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/users/{userId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
     public ResponseEntity getUser(@PathVariable Long userId) {
         return userService.getUser(userId);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}")
+    public ResponseEntity setUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+        return userService.setUser(userId, userDTO);
     }
 }
