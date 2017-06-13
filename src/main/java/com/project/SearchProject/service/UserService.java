@@ -10,4 +10,5 @@ import java.util.Map;
  */
 public interface UserService {
     public ResponseEntity createUser(UserDTO userDTO);
+    public ResponseEntity getUser(Long userId);
 }

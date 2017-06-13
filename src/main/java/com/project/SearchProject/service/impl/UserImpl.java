@@ -40,11 +40,24 @@ public class UserImpl implements UserService {
             response.put("message", "User was created");
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
-        else {
-            response.put("status", "error");
-            response.put("message", "error the user was not created");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        response.put("status", "error");
+        response.put("message", "error the user was not created");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity getUser(Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        User user = userRepository.findOne(userId);
+        if(null != user) {
+            response.put("status", "ok");
+            response.put("message", "User was found");
+            response.put("data", user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
+        response.put("status", "error");
+        response.put("message", "Error User doesn't exist");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
 }

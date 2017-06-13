@@ -34,4 +34,9 @@ public class UserController {
     public ResponseEntity saveUser(@RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/users/{userId}")
+    public ResponseEntity getUser(@PathVariable Long userId) {
+        return userService.getUser(userId);
+    }
 }
