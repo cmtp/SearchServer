@@ -97,6 +97,11 @@ public class UserImpl implements UserService {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Service to update the state of user
+     * @param userId
+     * @return
+     */
     @Override
     public ResponseEntity setUserStatus(Long userId) {
         Map<String, Object> response = new HashMap<>();
