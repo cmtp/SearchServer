@@ -23,6 +23,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Web Service to list users
+     * @param page
+     * @param size
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/users/{page}/{size}")
     public ResponseEntity getUser(@PathVariable int page, @PathVariable int size) {
         Map<String, Object> mapResponse = new HashMap<>();
@@ -30,16 +36,32 @@ public class UserController {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
+    /**
+     * Web service to create an user
+     * @param userDTO
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public ResponseEntity saveUser(@RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO);
     }
 
+    /**
+     * Web service to obtain an user from his userId
+     * @param userId
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
     public ResponseEntity getUser(@PathVariable Long userId) {
         return userService.getUser(userId);
     }
 
+    /**
+     * Web Service to update an user
+     * @param userId
+     * @param userDTO
+     * @return
+     */
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}")
     public ResponseEntity setUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
         return userService.setUser(userId, userDTO);

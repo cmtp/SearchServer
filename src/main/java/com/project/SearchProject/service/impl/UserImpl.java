@@ -22,6 +22,11 @@ public class UserImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Service to create an user
+     * @param userDTO
+     * @return
+     */
     @Transactional
     @Override
     public ResponseEntity createUser(UserDTO userDTO) {
@@ -45,6 +50,11 @@ public class UserImpl implements UserService {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Service rest to obtain an user
+     * @param userId
+     * @return
+     */
     @Override
     public ResponseEntity getUser(Long userId) {
         Map<String, Object> response = new HashMap<>();
@@ -60,6 +70,12 @@ public class UserImpl implements UserService {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Service to set params of user
+     * @param userId
+     * @param userDTO
+     * @return
+     */
     @Override
     public ResponseEntity setUser(Long userId, UserDTO userDTO) {
         Map<String, Object> response = new HashMap<>();
@@ -77,4 +93,5 @@ public class UserImpl implements UserService {
         response.put("message", "User not found");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
 }
