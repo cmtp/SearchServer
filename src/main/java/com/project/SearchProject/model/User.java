@@ -31,6 +31,9 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "STATUS")
+    private String status;
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Service service;
 
@@ -102,4 +105,11 @@ public class User {
         this.service = service;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

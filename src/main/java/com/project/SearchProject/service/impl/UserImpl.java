@@ -39,6 +39,7 @@ public class UserImpl implements UserService {
             user.setName(userDTO.getName());
             user.setGender(userDTO.getGender());
             user.setTypeUser(userDTO.getTypeUser());
+            user.setStatus("CREATED");
             userRepository.save(user);
             response.put("data", user);
             response.put("status", "ok");
@@ -76,6 +77,7 @@ public class UserImpl implements UserService {
      * @param userDTO
      * @return
      */
+    @Transactional
     @Override
     public ResponseEntity setUser(Long userId, UserDTO userDTO) {
         Map<String, Object> response = new HashMap<>();
@@ -84,6 +86,7 @@ public class UserImpl implements UserService {
             user.setName(userDTO.getName());
             user.setEmail(userDTO.getEmail());
             user.setGender(userDTO.getGender());
+            userRepository.save(user);
             response.put("status", "ok");
             response.put("message", "User was modified");
             response.put("data", user);
@@ -94,4 +97,20 @@ public class UserImpl implements UserService {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @Override
+    public ResponseEntity setUserStatus(Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        User user = userRepository.findOne(userId);
+        if (null != user) {
+            user.setStatus("ACTIVE");
+            userRepository.save(user);
+            response.put("status", "ok");
+            response.put("message", "The state of this user was changed");
+            response.put("data", user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("status", "error");
+        response.put("message", "User not found");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }

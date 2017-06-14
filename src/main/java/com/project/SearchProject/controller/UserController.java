@@ -66,4 +66,14 @@ public class UserController {
     public ResponseEntity setUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
         return userService.setUser(userId, userDTO);
     }
+
+    /**
+     * Web Service to set the state of the user from CREATED to ACTIVE
+     * @param userId
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}")
+    public ResponseEntity setStatus(@PathVariable Long userId) {
+        return userService.setUserStatus(userId);
+    }
 }
