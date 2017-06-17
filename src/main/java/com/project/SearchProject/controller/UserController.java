@@ -76,4 +76,14 @@ public class UserController {
     public ResponseEntity setStatus(@PathVariable Long userId) {
         return userService.setUserStatus(userId);
     }
+
+    /**
+     * Web Service to delete an user in database
+     * @param userId
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}")
+    public ResponseEntity deleteUser(@PathVariable Long userId) {
+        return userService.deleteUser(userId);
+    }
 }

@@ -13,4 +13,5 @@ public interface UserService {
     public ResponseEntity getUser(Long userId);
     public ResponseEntity setUser(Long userId, UserDTO userDTO);
     public ResponseEntity setUserStatus(Long userId);
+    public ResponseEntity deleteUser(Long userId);
 }

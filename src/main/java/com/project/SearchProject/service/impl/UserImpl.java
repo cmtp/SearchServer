@@ -31,8 +31,9 @@ public class UserImpl implements UserService {
     @Override
     public ResponseEntity createUser(UserDTO userDTO) {
         Map<String, Object> response = new HashMap<>();
-        if(null != userDTO) {
-            User user = new User();
+        User user = userRepository.findByUsername(userDTO.getUsername());
+        if(null == user) {
+            user = new User();
             user.setUsername(userDTO.getUsername());
             user.setEmail(userDTO.getEmail());
             user.setPassword(userDTO.getPassword());
@@ -40,6 +41,7 @@ public class UserImpl implements UserService {
             user.setGender(userDTO.getGender());
             user.setTypeUser(userDTO.getTypeUser());
             user.setStatus("CREATED");
+            user.setIsDeleted(false);
             userRepository.save(user);
             response.put("data", user);
             response.put("status", "ok");
@@ -47,8 +49,8 @@ public class UserImpl implements UserService {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
         response.put("status", "error");
-        response.put("message", "error the user was not created");
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        response.put("message", "The user: " + userDTO.getUsername() + " already exists");
+        return new ResponseEntity<>(response, HttpStatus.LOCKED);
     }
 
     /**
@@ -61,6 +63,12 @@ public class UserImpl implements UserService {
         Map<String, Object> response = new HashMap<>();
         User user = userRepository.findOne(userId);
         if(null != user) {
+            // TODO: We need to review how to do this control with the best form
+            if (user.getIsDeleted()) {
+                response.put("status", "error");
+                response.put("message", "User was deleted");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
             response.put("status", "ok");
             response.put("message", "User was found");
             response.put("data", user);
@@ -83,6 +91,11 @@ public class UserImpl implements UserService {
         Map<String, Object> response = new HashMap<>();
         User user = userRepository.findOne(userId);
         if (null != user) {
+            if (user.getIsDeleted()) {
+                response.put("status", "error");
+                response.put("message", "User was deleted");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
             user.setName(userDTO.getName());
             user.setEmail(userDTO.getEmail());
             user.setGender(userDTO.getGender());
@@ -107,10 +120,37 @@ public class UserImpl implements UserService {
         Map<String, Object> response = new HashMap<>();
         User user = userRepository.findOne(userId);
         if (null != user) {
+            if (user.getIsDeleted()) {
+                response.put("status", "error");
+                response.put("message", "User was deleted");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
             user.setStatus("ACTIVE");
             userRepository.save(user);
             response.put("status", "ok");
             response.put("message", "The state of this user was changed");
+            response.put("data", user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("status", "error");
+        response.put("message", "User not found");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Service to logicc delete the user
+     * @param userId
+     * @return
+     */
+    @Transactional
+    @Override
+    public ResponseEntity deleteUser(Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        User user = userRepository.findOne(userId);
+        if (null != user) {
+            user.setIsDeleted(true);
+            response.put("status", "ok");
+            response.put("message", "The user was removed");
             response.put("data", user);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

@@ -34,6 +34,9 @@ public class User {
     @Column(name = "STATUS")
     private String status;
 
+    @Column(name = "ISDELETED")
+    private Boolean isDeleted;
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Service service;
 
@@ -111,5 +114,13 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        isDeleted = isDeleted;
     }
 }
