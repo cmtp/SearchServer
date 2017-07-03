@@ -24,9 +24,9 @@ public class WebOauthConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js")
                 .permitAll().and()
-                .antMatcher("/api/**").addFilterBefore(new JWTFilter(secretKey), UsernamePasswordAuthenticationFilter.class)
+                .antMatcher("/api/rest/**").addFilterBefore(new JWTFilter(secretKey), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/authentication").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/authentication").permitAll()
                 .anyRequest().authenticated();
         http.headers().cacheControl();
     }

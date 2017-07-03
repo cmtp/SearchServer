@@ -16,7 +16,7 @@ import java.util.Map;
  * @author ctola
  */
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/api/rest")
 public class UserController {
     public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -30,7 +30,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/users/{page}/{size}")
-    public ResponseEntity getUser(@PathVariable int page, @PathVariable int size) {
+    public ResponseEntity getUserList(@PathVariable int page, @PathVariable int size) {
         Map<String, Object> mapResponse = new HashMap<>();
 
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class UserController {
      * @param userId
      * @return
      */
-    @RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}")
+    @RequestMapping(method = RequestMethod.POST, value = "/users/{userId}")
     public ResponseEntity setStatus(@PathVariable Long userId) {
         return userService.setUserStatus(userId);
     }

@@ -121,6 +121,6 @@ public class User {
     }
 
     public void setIsDeleted(Boolean isDeleted) {
-        isDeleted = isDeleted;
+        this.isDeleted = isDeleted;
     }
 }
